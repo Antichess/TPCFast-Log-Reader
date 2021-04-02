@@ -28,6 +28,9 @@ for i in range(len(rawdata)-1):
                      temp[2] = temp[2] + 1
                      userstats[j] = temp
 
+print("Username|Speed|Counts")
+print("---|---|---")
+                        
 unique_names = []
 timemax = 0
 for x in userstats:
