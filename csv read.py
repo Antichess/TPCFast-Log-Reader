@@ -1,7 +1,7 @@
 import csv
 
 rawdata = []
-with open("LOG_2677001to2678000.csv","r") as file:
+with open("LOG_4211001to4212000.csv","r") as file:
     reader = csv.reader(file)
 
     for row in reader:
@@ -54,6 +54,7 @@ for i in range(len(rawdata)-1):
                      userstats[j] = temp
 
 unique_names = []
+user_sums = []
 timemax = 0
 for x in userstats:
 
@@ -64,11 +65,15 @@ print("Username|Speed|Counts")
 print("---|---|---")
 
 for y in unique_names:
+    s = 0
     times = []
     for x in userstats:
         if y == x[0]:
             times.append(x[1])
+            s = s + (x[1] * x[2])
         times.sort()
+    append = (y,s)
+    user_sums.append(append)
 
 
     for t in times:
@@ -77,21 +82,9 @@ for y in unique_names:
                 print(str(x[0]) + " | " + str(t) + "s | " + str(x[2]))
                 break
 
-            
-user_sums = []
-for x in unique_names:
-    s = 0
-    for y in userstats:
-        if x == y[0]:
-            s = s + (y[1] * y[2])
-    append = (x,s)
-    user_sums.append(append)
-
 print()
 print("Username|Reply time sum")
 print("---|---")
 
 for x in user_sums:
     get_times(x)
-    
-
