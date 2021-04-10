@@ -1,12 +1,37 @@
 import csv
 
 rawdata = []
-with open("name.csv","r") as file:
-#put the log file name in the line 4, above this
+with open("LOG_2677001to2678000.csv","r") as file:
     reader = csv.reader(file)
-    
+
     for row in reader:
         rawdata.append(row)
+   
+def get_times(x):
+    seconds = x[1]
+    leftover = seconds % 86400
+    seconds -= leftover
+    days = seconds / 86400
+    seconds = leftover
+    leftover = seconds % 3600
+    seconds -= leftover
+    hours = seconds / 3600
+    seconds = leftover
+    leftover = seconds % 60
+    seconds -= leftover
+    mins = seconds / 60
+    seconds = leftover
+    timestr = ""
+    if days > 0:
+        timestr = timestr + str(int(days)) + "d "
+    if hours > 0:
+        timestr = timestr + str(int(hours)) + "h "
+    if mins > 0:
+        timestr = timestr + str(int(mins)) + "m "
+    timestr = timestr + str(int(seconds)) + "s "
+    print(str(x[0]) + " | " + timestr)
+    
+
 
 userstats = []
 for i in range(len(rawdata)-1):
@@ -28,9 +53,6 @@ for i in range(len(rawdata)-1):
                      temp[2] = temp[2] + 1
                      userstats[j] = temp
 
-print("Username|Speed|Counts")
-print("---|---|---")
-                        
 unique_names = []
 timemax = 0
 for x in userstats:
@@ -38,6 +60,8 @@ for x in userstats:
     if x[0] not in unique_names:
         unique_names.append(x[0])
 
+print("Username|Speed|Counts")
+print("---|---|---")
 
 for y in unique_names:
     times = []
@@ -52,8 +76,22 @@ for y in unique_names:
             if y == x[0] and t == x[1] and x[2] != 0:
                 print(str(x[0]) + " | " + str(t) + "s | " + str(x[2]))
                 break
+
             
-            
-        
-        
+user_sums = []
+for x in unique_names:
+    s = 0
+    for y in userstats:
+        if x == y[0]:
+            s = s + (y[1] * y[2])
+    append = (x,s)
+    user_sums.append(append)
+
+print()
+print("Username|Reply time sum")
+print("---|---")
+
+for x in user_sums:
+    get_times(x)
+    
 
