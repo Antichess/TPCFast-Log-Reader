@@ -86,5 +86,6 @@ print()
 print("Username|Reply time sum")
 print("---|---")
 
+user_sums.sort(key = lambda x: x[1])
 for x in user_sums:
     print(x[0] + " | " + get_times(x[1]))
