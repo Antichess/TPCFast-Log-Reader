@@ -1,14 +1,14 @@
 import csv
 
 rawdata = []
-with open("LOG_4211001to4212000.csv","r") as file:
+with open("LOG_4282001to4283000.csv","r") as file:
     reader = csv.reader(file)
 
     for row in reader:
         rawdata.append(row)
    
 def get_times(x):
-    seconds = x[1]
+    seconds = x
     leftover = seconds % 86400
     seconds -= leftover
     days = seconds / 86400
@@ -29,7 +29,7 @@ def get_times(x):
     if mins > 0:
         timestr = timestr + str(int(mins)) + "m "
     timestr = timestr + str(int(seconds)) + "s "
-    print(str(x[0]) + " | " + timestr)
+    return timestr
     
 
 
@@ -79,7 +79,7 @@ for y in unique_names:
     for t in times:
         for x in userstats:
             if y == x[0] and t == x[1] and x[2] != 0:
-                print(str(x[0]) + " | " + str(t) + "s | " + str(x[2]))
+                print(str(x[0]) + " | " + get_times(t) + "| " + str(x[2]))
                 break
 
 print()
@@ -87,4 +87,4 @@ print("Username|Reply time sum")
 print("---|---")
 
 for x in user_sums:
-    get_times(x)
+    print(x[0] + " | " + get_times(x[1]))
